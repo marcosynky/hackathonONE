@@ -1,5 +1,6 @@
 # HackathonONE (Oracle + Alura)
 
+
 # 📊 SentimentoAPI - Análise de Sentimento com IA e Microserviços
 
 > **Hackathon MVP**: Solução automatizada para classificação de feedbacks de clientes utilizando Processamento de Linguagem Natural (NLP).
@@ -14,66 +15,25 @@ Empresas recebem milhares de comentários diariamente e não conseguem ler todos
 
 -----
 
-## 🚀 Tecnologias
-
-<div>
-  <img src="https://img.shields.io/badge/Java-17-blue?style=for-the-badge&logo=java&logoColor=white">
-  <img src="https://img.shields.io/badge/Spring_Boot-3.0.6-green?style=for-the-badge&logo=springboot&logoColor=white">
-  <img src="https://img.shields.io/badge/Python-3.9-blue?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white">
-  <img src="https://img.shields.io/badge/Scikit--learn-FF9800?style=for-the-badge&logo=scikit-learn&logoColor=white">
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-  <img src="https://img.shields.io/badge/Joblib-0095D9?style=for-the-badge&logo=python&logoColor=white">
-  <img src="https://img.shields.io/badge/TensorFlow-FF6F00?style=for-the-badge&logo=tensorflow&logoColor=white">
-  <img src="https://img.shields.io/badge/H2-2.1.214-blue?style=for-the-badge&logo=h2&logoColor=white">
-  <img src="https://img.shields.io/badge/PostgreSQL-42.5.6-blue?style=for-the-badge&logo=postgresql&logoColor=white">
-  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white">
-  <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
-</div>
-
-<p>Este projeto utiliza as seguintes tecnologias:</p>
-<ul>
-  <li><strong>Java 17</strong>: Linguagem de programação utilizada para desenvolver o backend.</li>
-  <li><strong>Spring Boot</strong>: Framework Java utilizado para desenvolver a API do sistema.</li>
-  <li><strong>Python 3.9</strong>: Linguagem de programação usada no microserviço de Data Science.</li>
-  <li><strong>Flask</strong>: Framework Python para construir a API que hospeda o modelo de Machine Learning.</li>
-  <li><strong>Scikit-learn</strong>: Biblioteca Python para machine learning, utilizada para treinar o modelo de sentimento.</li>
-  <li><strong>Docker</strong>: Plataforma para automatizar a implantação de aplicações em containers, facilitando o desenvolvimento e a execução do projeto em diferentes ambientes.</li>
-  <li><strong>Joblib</strong>: Biblioteca Python para serialização do modelo treinado, permitindo seu carregamento eficiente no ambiente de produção.</li>
-  <li><strong>TensorFlow</strong>: Embora o modelo atual utilize o Scikit-learn, o TensorFlow pode ser utilizado para treinamento mais avançado, como redes neurais.</li>
-  <li><strong>H2</strong>: Banco de dados em memória utilizado para testes e desenvolvimento.</li>
-  <li><strong>PostgreSQL</strong>: Sistema de gerenciamento de banco de dados relacional utilizado em produção.</li>
-  <li><strong>GitHub</strong>: Plataforma de hospedagem de código, utilizada para versionamento do projeto e colaboração entre os desenvolvedores.</li>
-  <li><strong>Postman</strong>: Ferramenta usada para testar as APIs de forma rápida e eficaz, permitindo simular requisições HTTP e visualizar as respostas.</li>
-</ul>
-
-
-## 📊 Estado do Projeto
-
-![Progresso](https://img.shields.io/badge/Progresso-40%25-red?style=for-the-badge&labelColor=000000&color=FF0000&logo=github)
-
 ## 🏗️ Arquitetura Técnica
 
-### Explicação do Diagrama Mermaid:
+O projeto utiliza uma arquitetura de **Microserviços** containerizada:
 
-- **Usuário Envia Texto**: O usuário envia um texto para a API.
-- **API Spring Boot**: A API recebe a requisição via **POST** e a envia para o microserviço Python.
-- **Microserviço Python**: O microserviço Python realiza a análise de sentimento e retorna a previsão.
-- **Resposta da API**: A previsão de sentimento é retornada ao usuário via API.
-- **Opções de Ações**: O usuário pode optar por atualizar ou excluir a previsão de sentimento.
+1.  **Back-End (Java Spring Boot):** Atua como API Gateway. Recebe a requisição do cliente, valida os dados, sanitiza a entrada e orquestra a chamada ao serviço de IA.
+2.  **Data Science Service (Python Flask):** Um microserviço leve que carrega o modelo treinado (Scikit-Learn) na memória e realiza a inferência estatística.
 
- ```mermaid
-graph LR
-    A[Usuário Envia Texto] --> B{API Spring Boot}
-    B --> C[Requisição POST para Python]
-    C --> D[Microserviço Python]
-    D --> E[Retorno da Previsão de Sentimento]
-    E --> F[Resposta da API com Previsão]
-    F --> G[Usuário Recebe Previsão]
-    G --> H{Usuário Opções}
-    H -->|Atualizar| I[PUT Atualiza Sentimento]
-    H -->|Excluir| J[DELETE Exclui Sentimento]
-```
+**Fluxo de Dados:**
+`Cliente (JSON)` ➡️ `Spring Boot (Validação)` ➡️ `Python (Predição)` ➡️ `Spring Boot (Formatação)` ➡️ `Cliente`
+
+-----
+
+## 🛠️ Tecnologias Utilizadas
+
+### Back-End
+
+  * **Java 17** & **Spring Boot 3**
+  * **Spring Web** (REST API)
+  * **RestTemplate** (Comunicação HTTP entre serviços)
 
 ### Data Science
 
@@ -83,8 +43,6 @@ graph LR
   * **TF-IDF Vectorizer** (Processamento de texto)
   * **Joblib** (Serialização do modelo)
   * **Flask** (Exposição do modelo como API)
-
-
 
 ### Infraestrutura
 
@@ -115,7 +73,7 @@ docker-compose up --build
 
 Aguarde até ver as mensagens de log indicando que ambos os serviços iniciaram.
 
-  * **API Principal:** `http://localhost:8081`
+  * **API Principal:** `http://localhost:8080`
   * **Serviço de IA (Interno):** `http://localhost:5000`
 
 ### Opção 2: Rodando Manualmente
@@ -439,59 +397,40 @@ print("Modelo salvo como 'sentiment_model.joblib'")
 Esta é a API que o Spring Boot vai chamar. Ela carrega o arquivo `.joblib` e responde a requisições. Vamos usar **Flask** por ser simples.
 
 ```python
+# app_python.py
 from flask import Flask, request, jsonify
 import joblib
 
 app = Flask(__name__)
 
+# Carrega o modelo ao iniciar a API
 try:
-    data = joblib.load('modelo_b2w_rating_sentimento.pkl')
-    model = data['model']
-    vectorizer = data['vectorizer']
+    model = joblib.load('sentiment_model.joblib')
     print("Modelo carregado com sucesso!")
-
-except Exception as e:
-    print("Erro: Erro ao carregar o modelo.")
-    model = None
-    vectorizer = None
-
-LABEL_MAP = {
-    "negative": "Negativo",
-    "neutral": "Neutro",    
-    "positive": "Positivo"
-}
-
-
+except:
+    print("Erro: Execute o script de treinamento primeiro.")
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    try:
-        dados = request.get_json()
-        texto = dados.get('text') if dados else None
+    dados = request.get_json()
+    texto = dados.get('text')
 
-        if not texto or len(texto.strip()) < 5:
-            return jsonify({"erro": "Texto não fornecido ou muito curto."}), 400
+    if not texto:
+        return jsonify({"erro": "Texto não fornecido"}), 400
 
-        X = vectorizer.transform([texto])
+    # Predição
+    prediction = model.predict([texto])[0]
+    # Probabilidade (pega a maior probabilidade entre as classes)
+    proba = max(model.predict_proba([texto])[0])
 
-        prediction_label = model.predict(X)[0]
-        proba = float(model.predict_proba(X).max())
-
-        return jsonify({
-            "previsao": LABEL_MAP.get(prediction_label, "Desconhecido"),
-            "probabilidade": round(proba, 2)
-        })
-
-    except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return jsonify({"erro": str(e)}), 500
-
-
+    return jsonify({
+        "previsao": prediction,
+        "probabilidade": float(round(proba, 2))
+    })
 
 if __name__ == '__main__':
-    app.run(host = "0.0.0.0", port=5000)
-
+    # Roda na porta 5000
+    app.run(port=5000, debug=True)
 ```
 
 -----
@@ -632,6 +571,10 @@ Para apresentar isso no Hackathon, siga esta ordem exata:
 }
 ```
 
+### Dicas para a Apresentação (O "Pulo do Gato")
 
+1.  **Explicabilidade:** Se perguntarem por que escolheu essa arquitetura, diga: *"O desacoplamento permite que o time de Data Science evolua o modelo (mude de Regressão Logística para Rede Neural, por exemplo) sem que o time de Back-End precise alterar uma linha de código Java, apenas mantendo o contrato da API."*
+2.  **Tratamento de Erros:** Note que no Java eu coloquei um `try-catch`. Se o Python cair, o Java não "explode", ele avisa que o serviço de IA está indisponível. Isso conta pontos.
+"probabilidade":0.9
 
 }
